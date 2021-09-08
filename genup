@@ -382,7 +382,11 @@ bring_old_perl_modules_up_to_date() {
 }
 cleanup_python_config() {
     # remove uninstalled versions from /etc/python-exec/python-exec.conf
-    eselect python cleanup
+    # since this is no longer present on new Gentoo installs unless you
+    # install it yourself, here's a check for eselect python
+    if [ -f /usr/share/eselect/modules/python.eselect ]; then
+        eselect python cleanup
+    fi
 }
 run_custom_updaters_if_present() {
     # if not inhibited, find any executable files in the /etc/genup/updaters.d
